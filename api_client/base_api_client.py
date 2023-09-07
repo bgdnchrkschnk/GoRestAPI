@@ -1,5 +1,4 @@
 import requests
-from helpers.base_api_client import BaseEndpoints
 
 
 class BaseApiClient:
