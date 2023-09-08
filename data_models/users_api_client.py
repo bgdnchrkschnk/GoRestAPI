@@ -8,9 +8,12 @@ class PostUserModel:
     email: str
     status: str
 
+post_user_keys = ("name", "gender", "email", "status")
 
 @dataclass(frozen=True)
 class PutUserModel:
     name: str = None
     email: str = None
     status: str = None
+
+put_user_keys = ("name", "email", "status")
