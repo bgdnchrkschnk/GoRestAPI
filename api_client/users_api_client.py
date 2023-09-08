@@ -51,8 +51,3 @@ class UserApiClient(BaseApiClient):
     def set_api_token(self, api_token):
         super().__init__(api_token=api_token)
 
-
-
-
-a = UserApiClient()
-a.set_api_token("bhebjc")
