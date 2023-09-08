@@ -1,10 +1,6 @@
 from randomuser import RandomUser
 import random
 
-
-class DataProviderUser:
-    pass
-
 class PostUserDataProvider:
 
     @staticmethod
@@ -33,6 +29,3 @@ class PutUserDataProvider:
                 if random.choice(choice):
                     dict_user["status"] = status
             return dict_user
-
-
-print(PutUserDataProvider.get_put_user_datamodel())
