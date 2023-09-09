@@ -1,0 +1,2 @@
+class ApiTokenNotFoundError(Exception):
+    pass

@@ -1,5 +1,6 @@
 import requests
 
+from exceptions.base_api_client import *
 
 class BaseApiClient:
     BASE_URL = "https://gorest.co.in/public/v2"
@@ -8,10 +9,12 @@ class BaseApiClient:
         self.__client = requests.Session()
         if api_token:
             self.__api_token = api_token
+            self._headers_update()
 
-    def __headers_update(self):
+    def _headers_update(self):
         header = f"Bearer {self.__api_token}"
-        self.__client.headers.update(dict(Autorization=header))
+        headers = dict(Authorization=header)
+        self.__client.headers.update(headers)
 
     def _get(self, endpoint):
         return self.__client.get(url=endpoint)
@@ -24,3 +27,4 @@ class BaseApiClient:
 
     def _delete(self, endpoint):
         return self.__client.delete(url=endpoint)
+

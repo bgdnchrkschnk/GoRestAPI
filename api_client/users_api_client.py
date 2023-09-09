@@ -1,3 +1,5 @@
+import requests
+
 from api_client.base_api_client import BaseApiClient
 from helpers.users_api_client import UsersEndpoints
 from data_models.users_api_client import *
@@ -12,9 +14,6 @@ class UserApiClient(BaseApiClient):
         if api_token:
             super().__init__(api_token=api_token)
 
-    @property
-    def api_token(self):
-        return self.__api_token if self.__api_token else None
 
     def get(self, user_id: int):
         endpoint = UsersEndpoints.build_get_users_endpoint(user_id=user_id)
@@ -50,4 +49,6 @@ class UserApiClient(BaseApiClient):
 
     def set_api_token(self, api_token):
         super().__init__(api_token=api_token)
+
+s = UserApiClient
 
