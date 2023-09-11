@@ -1,5 +1,6 @@
 from api_client.base_api_client import BaseApiClient
 from helpers.posts_api_client import PostsEndpoint
+from data_provider.posts_api_client import UserPostDataProvider
 
 
 class PostsApiClient(BaseApiClient):
@@ -7,8 +8,26 @@ class PostsApiClient(BaseApiClient):
 
     def get(self, user_id):
         endpoint = PostsEndpoint.build_getdel_post_endpoint(user_id=user_id)
-        return self.__client.get(endpoint=endpoint)
+        return self._get(endpoint=endpoint)
 
-    def delete(self, user_id):
+    def post(self, user_id: int, data: dict = None):
         endpoint = PostsEndpoint.build_getdel_post_endpoint(user_id=user_id)
-        return self.__client.delete(endpoint=endpoint)
+        if not data:
+            data = self._get_user_model_for_put()
+        else:
+            try:
+                data = asdict(PostUserModel(data))
+            except:
+                raise InvalidUserDataModelDict("Wrong data format provided!")
+        return self._post(endpoint=endpoint)
+
+    @staticmethod
+    def _get_user_post_model_for_post():
+        user_dict = UserPostDataProvider.get_post_user_datamodel()
+        return user_dict
+
+    def create_post(self, user_id: int):
+        pass
+
+    def find_user_posts(self, user_id: int):
+        return self.get(user_id=user_id)
