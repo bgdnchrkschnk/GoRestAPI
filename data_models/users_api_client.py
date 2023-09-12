@@ -17,3 +17,7 @@ class PutUserModel:
     status: str = None
 
 put_user_keys = ("name", "email", "status")
+
+d = {"name":"Bohdan", "gender": "male", "email":"djnsjbv@gmail.com", "status":"active"}
+
+[print("yes") for key in d if key in post_user_keys]

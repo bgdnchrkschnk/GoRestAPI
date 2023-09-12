@@ -26,10 +26,14 @@ class UserApiClient(BaseApiClient):
         endpoint = UsersEndpoints.build_post_users_endpoint()
         if not data:
             data = self._get_user_model_for_post()
+            if not len(data):
+                data = self._get_user_model_for_post()
         else:
-            try:
-                data = asdict(PostUserModel(data))
-            except:
+            count = 0
+            for key in data:
+                if key in post_user_keys:
+                    count += 1
+            if not count == len(post_user_keys):
                 raise InvalidUserDataModelDict("Wrong data format provided!")
         self.__email_ = data["email"]
         return self._post(endpoint=endpoint, data=data)
@@ -40,9 +44,11 @@ class UserApiClient(BaseApiClient):
         if not data:
             data = self._get_user_model_for_put()
         else:
-            try:
-                data = asdict(PostUserModel(data))
-            except:
+            count = 0
+            for key in data:
+                if key in put_user_keys:
+                    count += 1
+            if not count == len(put_user_keys):
                 raise InvalidUserDataModelDict("Wrong data format provided!")
         return self._put(endpoint=endpoint, data=data)
 

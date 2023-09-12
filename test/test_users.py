@@ -1,3 +1,4 @@
+import data_models.users_api_client
 from access.api_token import API_TOKEN
 
 
@@ -7,7 +8,7 @@ class TestUsersCRUD:
 
     def test_create_user(self, users_client):
         users_client.set_api_token(api_token=API_TOKEN)
-        response = users_client.create_user()
+        response = users_client.create_user(data=data_models.users_api_client.d)
         self.__class__._USER_POST = response.json()  # save created user json data in class dict variable
         assert response.ok, f"Failed to create user, status code {response}"
 
