@@ -9,11 +9,11 @@ class PostsApiClient(BaseApiClient):
     ENDPOINT = "/posts"
 
     def get(self, user_id):
-        endpoint = PostsEndpoint.build_getdel_post_endpoint(user_id=user_id)
+        endpoint = PostsEndpoint.build_getpost_post_endpoint(user_id=user_id)
         return self._get(endpoint=endpoint)
 
     def post(self, user_id: int, data: dict = None):
-        endpoint = PostsEndpoint.build_getdel_post_endpoint(user_id=user_id)
+        endpoint = PostsEndpoint.build_getpost_post_endpoint(user_id=user_id)
         if not data:
             data = self._get_user_post_model_for_post()
         else:
@@ -27,8 +27,7 @@ class PostsApiClient(BaseApiClient):
 
     @staticmethod
     def _get_user_post_model_for_post():
-        user_dict = UserPostDataProvider.get_user_post_datamodel()
-        return user_dict
+        return UserPostDataProvider.get_user_post_datamodel()
 
     def create_post(self, user_id: int, data: dict = None):
         return self.post(user_id=user_id, data=data)

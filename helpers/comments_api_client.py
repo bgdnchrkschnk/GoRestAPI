@@ -4,8 +4,8 @@ from api_client.base_api_client import BaseApiClient
 class CommentsEndpoint:
 
     @staticmethod
-    def build_getdel_post_endpoint(user_id):
-        from api_client.users_api_client import UserApiClient
+    def build_getpost_comment_endpoint(post_id):
+        from api_client.posts_api_client import PostsApiClient
         from api_client.comments_api_client import CommentsApiClient
-        endpoint = BaseApiClient.BASE_URL + UserApiClient.ENDPOINT + user_id + CommentsApiClient.ENDPOINT
+        endpoint = BaseApiClient.BASE_URL + PostsApiClient.ENDPOINT + str(post_id) + CommentsApiClient.ENDPOINT
         return endpoint
