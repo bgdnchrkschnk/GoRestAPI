@@ -1,21 +1,20 @@
 from access.api_token import API_TOKEN
 import pytest_check as check
+from data_models.posts_api_client import PostDataModel
 
 
 class TestPostsCRUD:
     _USER_ID: int = None
 
     def test_create_post(self, users_client, posts_client):
-        users_client.set_api_token(api_token=API_TOKEN)
-        posts_client.set_api_token(api_token=API_TOKEN)
         response = users_client.create_user()
-        self.__class__._USER_ID = int(response.json()['id'])  # save user_id of created user
+        self.__class__._USER_ID = int(response.json()['id'])
         user_id = self.__class__._USER_ID
         response = posts_client.create_post(user_id=user_id)
         check.is_true(response.ok, f"{response.status_code} Failed to create user post, {response.json()}")
+        [check.is_true(key in PostDataModel.response_users_post_keys) for key in response.json().keys()]
 
     def test_get_user_post(self, posts_client):
-        posts_client.set_api_token(api_token=API_TOKEN)
         response = posts_client.find_user_posts(user_id=self.__class__._USER_ID)
         expected_id = self.__class__._USER_ID
         actual_id = response.json()[0]["user_id"]
