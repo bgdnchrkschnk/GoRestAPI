@@ -1,12 +1,12 @@
 from api_client.base_api_client import BaseApiClient
 from helpers.posts_api_client import PostsEndpoint
 from data_provider.posts_api_client import UserPostDataProvider
-from data_models.posts_api_client import *
+from data_models.posts_api_client import PostDataModel
 from exceptions.posts_api_client import InvalidUserDataModelDict
 
 
 class PostsApiClient(BaseApiClient):
-    ENDPOINT = "/posts"
+    ENDPOINT = "/posts/"
 
     def get(self, user_id):
         endpoint = PostsEndpoint.build_getpost_post_endpoint(user_id=user_id)
@@ -19,10 +19,10 @@ class PostsApiClient(BaseApiClient):
         else:
             count = 0
             for key in data:
-                if key in users_post_keys:
+                if key in PostDataModel.request_users_post_keys:
                     count += 1
-            if not count == len(users_post_keys):
-                raise InvalidUserDataModelDict("Wrong data format provided!")
+                else:
+                    raise InvalidUserDataModelDict("Wrong data format provided!")
         return self._post(endpoint=endpoint, data=data)
 
     @staticmethod
@@ -34,3 +34,7 @@ class PostsApiClient(BaseApiClient):
 
     def find_user_posts(self, user_id: int):
         return self.get(user_id=user_id)
+
+    def retrieve_posts(self):
+        endpoint = PostsEndpoint.build_retrieve_posts_endpoint()
+        return self._retrieve(endpoint=endpoint)

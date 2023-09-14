@@ -9,3 +9,10 @@ class CommentsEndpoint:
         from api_client.comments_api_client import CommentsApiClient
         endpoint = BaseApiClient.BASE_URL + PostsApiClient.ENDPOINT + str(post_id) + CommentsApiClient.ENDPOINT
         return endpoint
+
+    @staticmethod
+    def build_retrieve_comments_endpoint():
+        from api_client.comments_api_client import CommentsApiClient
+        endpoint = BaseApiClient.BASE_URL + CommentsApiClient.ENDPOINT
+        return endpoint
+

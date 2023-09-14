@@ -26,3 +26,9 @@ class UsersEndpoints:
         from api_client.users_api_client import UserApiClient
         endpoint = BaseApiClient.BASE_URL + UserApiClient.ENDPOINT + str(user_id)
         return endpoint
+
+    @staticmethod
+    def build_retrieve_users_endpoint():
+        from api_client.users_api_client import UserApiClient
+        endpoint = BaseApiClient.BASE_URL + UserApiClient.ENDPOINT
+        return endpoint

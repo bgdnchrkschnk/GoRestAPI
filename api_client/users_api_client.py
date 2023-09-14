@@ -2,7 +2,7 @@ import requests
 
 from api_client.base_api_client import BaseApiClient
 from helpers.users_api_client import UsersEndpoints
-from data_models.users_api_client import *
+from data_models.users_api_client import UserDataModel
 from exceptions.users_api_client import InvalidUserDataModelDict
 from data_provider.users_api_client import PostUserDataProvider, PutUserDataProvider
 from wrappers.api_clients import *
@@ -31,10 +31,10 @@ class UserApiClient(BaseApiClient):
         else:
             count = 0
             for key in data:
-                if key in post_user_keys:
+                if key in UserDataModel.response_put_user_keys:
                     count += 1
-            if not count == len(post_user_keys):
-                raise InvalidUserDataModelDict("Wrong data format provided!")
+                else:
+                    raise InvalidUserDataModelDict("Wrong data format provided!")
         self.__email_ = data["email"]
         return self._post(endpoint=endpoint, data=data)
 
@@ -46,9 +46,9 @@ class UserApiClient(BaseApiClient):
         else:
             count = 0
             for key in data:
-                if key in put_user_keys:
+                if key in UserDataModel.response_put_user_keys:
                     count += 1
-            if not count == len(put_user_keys):
+            if not count == len(UserDataModel.response_put_user_keys):
                 raise InvalidUserDataModelDict("Wrong data format provided!")
         return self._put(endpoint=endpoint, data=data)
 
@@ -77,3 +77,7 @@ class UserApiClient(BaseApiClient):
 
     def delete_user(self, user_id: int):
         return self.delete(user_id=user_id)
+
+    def retrieve_users(self):
+        endpoint = UsersEndpoints.build_retrieve_users_endpoint()
+        return self._retrieve(endpoint=endpoint)

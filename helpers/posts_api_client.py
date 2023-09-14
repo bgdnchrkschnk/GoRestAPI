@@ -9,3 +9,9 @@ class PostsEndpoint:
         from api_client.posts_api_client import PostsApiClient
         endpoint = BaseApiClient.BASE_URL + UserApiClient.ENDPOINT + str(user_id) + PostsApiClient.ENDPOINT
         return endpoint
+
+    @staticmethod
+    def build_retrieve_posts_endpoint():
+        from api_client.posts_api_client import PostsApiClient
+        endpoint = BaseApiClient.BASE_URL + PostsApiClient.ENDPOINT
+        return endpoint

@@ -1,4 +1,5 @@
 import requests
+from random import randint
 
 from exceptions.base_api_client import *
 
@@ -37,6 +38,13 @@ class BaseApiClient:
     def _delete(self, endpoint):
         return self.__client.delete(url=endpoint)
 
+    def _retrieve(self, endpoint):
+        return self.__client.get(url=endpoint)
+
     def set_api_token(self, api_token):
         self.api_token = api_token
+
+    def get_random_post_id(self, response_obj):
+        return response_obj.json()[randint(0,len(response_obj.json()))]["id"]
+
 

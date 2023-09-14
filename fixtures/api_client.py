@@ -5,27 +5,26 @@ from api_client.comments_api_client import CommentsApiClient
 from api_client.todos_api_client import TodosApiClient
 from access.api_token import API_TOKEN
 
-
 @pytest.fixture
 def users_client():
-    client = UserApiClient(API_TOKEN)
+    client = UserApiClient(api_token=API_TOKEN)
     yield client
     del client
 
 @pytest.fixture
 def posts_client():
-    client = PostsApiClient()
+    client = PostsApiClient(api_token=API_TOKEN)
     yield client
     del client
 
 @pytest.fixture
 def comments_client():
-    client = CommentsApiClient()
+    client = CommentsApiClient(api_token=API_TOKEN)
     yield client
     del client
 
 @pytest.fixture
 def todos_client():
-    client = TodosApiClient()
+    client = TodosApiClient(api_token=API_TOKEN)
     yield client
     del client

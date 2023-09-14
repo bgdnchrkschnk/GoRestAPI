@@ -3,7 +3,7 @@ from helpers.todos_api_client import TodosEndpoint
 
 
 class TodosApiClient(BaseApiClient):
-    ENDPOINT = "/todos"
+    ENDPOINT = "/todos/"
 
     def get(self, user_id):
         endpoint = TodosEndpoint.build_getdel_post_endpoint(user_id=user_id)
