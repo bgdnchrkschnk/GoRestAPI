@@ -1,0 +1,2 @@
+class InvalidUserTodoDataModelDict(Exception):
+    pass

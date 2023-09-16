@@ -6,6 +6,7 @@ from data_models.users_api_client import UserDataModel
 from exceptions.users_api_client import InvalidUserDataModelDict
 from data_provider.users_api_client import PostUserDataProvider, PutUserDataProvider
 from wrappers.api_clients import *
+from allure import step
 
 
 class UserApiClient(BaseApiClient):
@@ -66,15 +67,19 @@ class UserApiClient(BaseApiClient):
         user_dict = PutUserDataProvider.get_put_user_datamodel()
         return user_dict
 
+    @step("Create a user")
     def create_user(self, data: dict = None):
         return self.post(data=data)
 
+    @step("Get a user")
     def find_user(self, user_id: int):
         return self.get(user_id=user_id)
 
+    @step("Edit a user")
     def edit_user(self, user_id: int, data: dict = None):
         return self.put(user_id=user_id, data=data)
 
+    @step("Delete a user")
     def delete_user(self, user_id: int):
         return self.delete(user_id=user_id)
 

@@ -2,6 +2,7 @@ from api_client.base_api_client import BaseApiClient
 from data_provider.comments_api_client import PostCommentDataProvider
 from data_models.comments_api_client import CommentDataModel
 from exceptions.comments_api_client import *
+from allure import step
 
 
 class CommentsApiClient(BaseApiClient):
@@ -30,9 +31,11 @@ class CommentsApiClient(BaseApiClient):
     def _get_post_comment_model_for_post():
         return PostCommentDataProvider.get_post_comment_datamodel()
 
+    @step("Create a comment for a post")
     def create_post_comment(self, post_id: int, data: dict = None):
         return self.post(post_id=post_id, data=data)
 
+    @step("Get post comments")
     def find_post_comments(self, post_id):
         return self.get(post_id=post_id)
 

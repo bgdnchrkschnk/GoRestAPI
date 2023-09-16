@@ -1,6 +1,6 @@
 import pytest_check as check
 from data_models.posts_api_client import PostDataModel
-from allure import title, description, severity, severity_level, suite, attach, attachment_type
+from allure import title, description, severity, severity_level, suite
 
 @suite("Users posts CRUD")
 class TestPostsCRUD:
@@ -14,6 +14,7 @@ class TestPostsCRUD:
         self.__class__._USER_ID = int(response.json()['id'])
         user_id = self.__class__._USER_ID
         response = posts_client.create_post(user_id=user_id)
+
         check.is_true(response.ok, f"{response.status_code} Failed to create user post, {response.json()}")
         [check.is_true(key in PostDataModel.response_users_post_keys) for key in response.json().keys()]
 
@@ -24,5 +25,6 @@ class TestPostsCRUD:
         response = posts_client.find_user_posts(user_id=self.__class__._USER_ID)
         expected_id = self.__class__._USER_ID
         actual_id = response.json()[0]["user_id"]
+
         check.is_true(response.ok, f"{response.status_code} Failed to get user post, {response.json()}")
         check.equal(expected_id, actual_id, f"Expected id {expected_id} is not equal to actual id {actual_id}")

@@ -3,6 +3,7 @@ from helpers.posts_api_client import PostsEndpoint
 from data_provider.posts_api_client import UserPostDataProvider
 from data_models.posts_api_client import PostDataModel
 from exceptions.posts_api_client import InvalidUserDataModelDict
+from allure import step
 
 
 class PostsApiClient(BaseApiClient):
@@ -25,13 +26,16 @@ class PostsApiClient(BaseApiClient):
                     raise InvalidUserDataModelDict("Wrong data format provided!")
         return self._post(endpoint=endpoint, data=data)
 
+
     @staticmethod
     def _get_user_post_model_for_post():
         return UserPostDataProvider.get_user_post_datamodel()
 
+    @step("Create a user post")
     def create_post(self, user_id: int, data: dict = None):
         return self.post(user_id=user_id, data=data)
 
+    @step("Get a user post")
     def find_user_posts(self, user_id: int):
         return self.get(user_id=user_id)
 
