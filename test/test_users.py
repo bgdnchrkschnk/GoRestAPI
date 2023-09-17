@@ -1,6 +1,6 @@
 from data_models.users_api_client import UserDataModel
 import pytest_check as check
-from allure import title, description, severity, severity_level, suite
+from allure import title, description, severity, severity_level, suite, attach, attachment_type
 
 @suite("Users CRUD")
 class TestUsersCRUD:
@@ -24,6 +24,7 @@ class TestUsersCRUD:
         response = users_client.find_user(user_id=self._USER_POST["id"])
 
         check.is_true(response.ok, f"Failed get user by userid={self._USER_POST['id']}, {response.json()}")
+
 
     @title("Check user edits on server successfully")
     @description("Test verifies if user successfully edited with PUT request")

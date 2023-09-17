@@ -4,38 +4,32 @@ from data_provider.posts_api_client import UserPostDataProvider
 from data_models.posts_api_client import PostDataModel
 from exceptions.posts_api_client import InvalidUserDataModelDict
 from allure import step
+from wrappers.api_clients import attach_allure_data_wrapper
 
 
 class PostsApiClient(BaseApiClient):
     ENDPOINT = "/posts/"
+    _POST_DATA = UserPostDataProvider.get_user_post_datamodel().__next__()
 
     def get(self, user_id):
         endpoint = PostsEndpoint.build_getpost_post_endpoint(user_id=user_id)
         return self._get(endpoint=endpoint)
 
-    def post(self, user_id: int, data: dict = None):
+    def post(self, user_id: int, data):
         endpoint = PostsEndpoint.build_getpost_post_endpoint(user_id=user_id)
-        if not data:
-            data = self._get_user_post_model_for_post()
-        else:
-            count = 0
-            for key in data:
-                if key in PostDataModel.request_users_post_keys:
-                    count += 1
-                else:
-                    raise InvalidUserDataModelDict("Wrong data format provided!")
+
+        for key in data:
+            if not key in PostDataModel.request_users_post_keys:
+                raise InvalidUserDataModelDict("Wrong data format provided!")
+
         return self._post(endpoint=endpoint, data=data)
 
-
-    @staticmethod
-    def _get_user_post_model_for_post():
-        return UserPostDataProvider.get_user_post_datamodel()
-
     @step("Create a user post")
-    def create_post(self, user_id: int, data: dict = None):
+    def create_post(self, user_id: int, data: dict = _POST_DATA):
         return self.post(user_id=user_id, data=data)
 
     @step("Get a user post")
+    @attach_allure_data_wrapper
     def find_user_posts(self, user_id: int):
         return self.get(user_id=user_id)
 

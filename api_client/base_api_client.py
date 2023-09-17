@@ -7,10 +7,15 @@ from exceptions.base_api_client import *
 class BaseApiClient:
     BASE_URL = "https://gorest.co.in/public/v2"
 
-    def __init__(self, api_token=None):
+    def __init__(self, logger, api_token=None):
         self.__client = requests.Session()
         self.__api_token = api_token if api_token else None
         self._headers_update()
+        self.__logger = logger
+
+    @property
+    def logger(self):
+        return self.__logger
 
     @property
     def api_token(self):

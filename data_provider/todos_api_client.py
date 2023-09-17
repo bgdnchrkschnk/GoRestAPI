@@ -15,6 +15,3 @@ class TodosDataProvider:
         else:
             due_on = None
         yield dict(title=title, status=status, due_on=due_on if due_on else None)
-
-
-print(TodosDataProvider.get_post_todo_datamodel().__next__())

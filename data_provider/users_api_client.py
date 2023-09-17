@@ -1,6 +1,10 @@
 from randomuser import RandomUser
 import random
 
+from data_models.users_api_client import UserDataModel
+from exceptions.users_api_client import InvalidUserDataModelDict
+
+
 class PostUserDataProvider:
 
     @staticmethod
@@ -9,7 +13,7 @@ class PostUserDataProvider:
         gender = RandomUser().get_gender()
         email = RandomUser().get_email()
         status = "active"
-        return dict(name=name, gender=gender, email=email, status=status)
+        yield dict(name=name, gender=gender, email=email, status=status)
 
 
 class PutUserDataProvider:
@@ -28,4 +32,4 @@ class PutUserDataProvider:
                 dict_user["email"] = email
             if random.choice(choice):
                 dict_user["status"] = status
-        return dict_user
+        yield dict_user

@@ -8,4 +8,4 @@ class PostCommentDataProvider:
         name = RandomUser().get_first_name()
         email = RandomUser().get_email()
         body = RandomUser().get_state(capitalize=True)
-        return dict(name=name, email=email, body=body)
+        yield dict(name=name, email=email, body=body)

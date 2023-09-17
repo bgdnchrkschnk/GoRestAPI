@@ -4,38 +4,35 @@ from data_models.comments_api_client import CommentDataModel
 from exceptions.comments_api_client import *
 from allure import step
 
+from wrappers.api_clients import attach_allure_data_wrapper
+
 
 class CommentsApiClient(BaseApiClient):
     ENDPOINT = "/comments/"
+    _POST_DATA = PostCommentDataProvider.get_post_comment_datamodel().__next__()
 
     def get(self, post_id):
         from helpers.comments_api_client import CommentsEndpoint
         endpoint = CommentsEndpoint.build_getpost_comment_endpoint(post_id=post_id)
         return self._get(endpoint=endpoint)
 
-    def post(self, post_id: int, data: dict = None):
+    def post(self, post_id: int, data):
         from helpers.comments_api_client import CommentsEndpoint
         endpoint = CommentsEndpoint.build_getpost_comment_endpoint(post_id=post_id)
-        if not data:
-            data = self._get_post_comment_model_for_post()
-        else:
-            count = 0
-            for key in data:
-                if key in CommentDataModel.request_post_comment_keys:
-                    count += 1
-                else:
-                    raise InvalidUserDataModelDict("Wrong data format provided!")
+
+        for key in data:
+            if not key in CommentDataModel.request_post_comment_keys:
+                raise InvalidUserDataModelDict("Wrong data format provided!")
+
         return self._post(endpoint=endpoint, data=data)
 
-    @staticmethod
-    def _get_post_comment_model_for_post():
-        return PostCommentDataProvider.get_post_comment_datamodel()
 
     @step("Create a comment for a post")
-    def create_post_comment(self, post_id: int, data: dict = None):
+    def create_post_comment(self, post_id: int, data: dict = _POST_DATA):
         return self.post(post_id=post_id, data=data)
 
     @step("Get post comments")
+    @attach_allure_data_wrapper
     def find_post_comments(self, post_id):
         return self.get(post_id=post_id)
 
