@@ -26,11 +26,15 @@ class PostsApiClient(BaseApiClient):
 
     @step("Create a user post")
     def create_post(self, user_id: int, data: dict = _POST_DATA):
+        self.logger.debug(f"Creating a post for user with user_id {user_id}")
+        self.logger.debug("Sending POST request..")
         return self.post(user_id=user_id, data=data)
 
     @step("Get a user post")
     @attach_allure_data_wrapper
     def find_user_posts(self, user_id: int):
+        self.logger.debug(f"Getting user posts from user_id {user_id}")
+        self.logger.debug("Sending GET request..")
         return self.get(user_id=user_id)
 
     def retrieve_posts(self):

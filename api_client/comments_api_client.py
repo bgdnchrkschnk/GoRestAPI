@@ -29,11 +29,15 @@ class CommentsApiClient(BaseApiClient):
 
     @step("Create a comment for a post")
     def create_post_comment(self, post_id: int, data: dict = _POST_DATA):
+        self.logger.debug(f"Creating user post comment by post_id {post_id}")
+        self.logger.debug("Sending POST request..")
         return self.post(post_id=post_id, data=data)
 
     @step("Get post comments")
     @attach_allure_data_wrapper
     def find_post_comments(self, post_id):
+        self.logger.debug(f"Getting user post comments by post_id {post_id}")
+        self.logger.debug("Sending GET request..")
         return self.get(post_id=post_id)
 
     def retrieve_comments(self):

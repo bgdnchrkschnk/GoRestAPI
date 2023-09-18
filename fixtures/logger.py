@@ -2,6 +2,7 @@ import logging
 import allure
 import pytest
 from io import StringIO
+from allure import title
 
 
 

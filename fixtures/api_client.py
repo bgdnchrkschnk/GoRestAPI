@@ -4,6 +4,8 @@ from api_client.posts_api_client import PostsApiClient
 from api_client.comments_api_client import CommentsApiClient
 from api_client.todos_api_client import TodosApiClient
 from access.api_token import API_TOKEN
+from allure import title
+
 
 @pytest.fixture
 def users_client(custom_logger):

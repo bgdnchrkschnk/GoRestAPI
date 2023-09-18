@@ -32,8 +32,12 @@ class TodosApiClient(BaseApiClient):
     @step("Get user todos")
     @attach_allure_data_wrapper
     def find_todo(self, user_id):
+        self.logger.debug(f"Getting user todos from user_id {user_id}")
+        self.logger.debug("Sending GET request..")
         return self.get(user_id=user_id)
 
     @step("Create user todo")
     def create_todo(self, user_id, data: dict = POST_DATA):
+        self.logger.debug(f"Creating a todo for user with user_id {user_id}")
+        self.logger.debug("Sending POST request..")
         return self.post(user_id=user_id, data=data)
